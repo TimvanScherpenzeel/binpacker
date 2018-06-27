@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "argparse": "^1.0.10",
+    "glob": "^7.1.2",
     "mime-types": "^2.1.18"
   },
   "devDependencies": {
