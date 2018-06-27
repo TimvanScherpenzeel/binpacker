@@ -1,0 +1,19 @@
+{
+  "name": "binpacker",
+  "version": "0.0.1",
+  "description": "CLI tool for packing multiple files into a single binary in order to save network requests in the browser.",
+  "main": "index.js",
+  "author": "Tim van Scherpenzeel",
+  "license": "MIT",
+  "dependencies": {
+    "argparse": "^1.0.10",
+    "mime-types": "^2.1.18"
+  },
+  "devDependencies": {
+    "eslint": "^5.0.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "prettier": "^1.13.6",
+    "prettier-eslint": "^8.8.2"
+  }
+}
