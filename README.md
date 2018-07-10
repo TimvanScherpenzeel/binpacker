@@ -40,17 +40,17 @@ uint32 length
 
 - `length` is the total length of the Binpacker file, including Header and all Chunks, in bytes.
 
-- A single JSON chunk header marked by `JSON` (uint32 chunkLength, uint32 chunkType)
+- A single JSON chunk header marked by `JSON` in ASCII (uint32 chunkLength, uint32 chunkType)
 
-The JSON chunk header has a field that marks the length of the JSON chunk and a type marked `JSON`.
+The JSON chunk header has a field that marks the length of the JSON chunk and a type marked `JSON` in ASCII.
 
 - A single JSON chunk (ubyte[] chunkData)
 
 The JSON chunk contains a stringified JSON description of the processed files: `name`, `bufferStart`, `bufferEnd` and `mimeType`. The difference between `bufferStart` and `bufferEnd` describe the length of the file. This length is used to extract the correct amount of bytes per file from the binary chunk that follows next.
 
-- A single binary chunk header marked by `BIN` (uint32 chunkLength, uint32 chunkType)
+- A single binary chunk header marked by `BIN` in ASCII (uint32 chunkLength, uint32 chunkType)
 
-The binary chunk header has a field that marks the length of the binary chunk and a type marked `BIN`.
+The binary chunk header has a field that marks the length of the binary chunk and a type marked `BIN` in ASCII.
 
 - A single binary chunk (ubyte[] chunkData)
 
