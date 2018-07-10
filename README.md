@@ -26,21 +26,33 @@ A `Binpacker` file has the following structure (very similar to the [GLB File Fo
 
 - A 12-byte header
 
-The header consists out a magic byte `BINP`, a version number `1` and the total file length.
+The 12-byte header consists of three 4-byte entries:
 
-- A single JSON chunk header marked by `JSON`
+```
+uint32 magic
+uint32 version
+uint32 length
+```
+
+- `magic` equals `0x504e4942`. It is ASCII string `BINP`, and can be used to identify data as Binpacker.
+
+- `version` indicates the version of the Binpacker. This specification defines version 1.
+
+- `length` is the total length of the Binpacker file, including Header and all Chunks, in bytes.
+
+- A single JSON chunk header marked by `JSON` (uint32 chunkLength, uint32 chunkType)
 
 The JSON chunk header has a field that marks the length of the JSON chunk and a type marked `JSON`.
 
-- A single JSON chunk
+- A single JSON chunk (ubyte[] chunkData)
 
 The JSON chunk contains a stringified JSON description of the processed files: `name`, `bufferStart`, `bufferEnd` and `mimeType`. The difference between `bufferStart` and `bufferEnd` describe the length of the file. This length is used to extract the correct amount of bytes per file from the binary chunk that follows next.
 
-- A single binary chunk header marked by `BIN`
+- A single binary chunk header marked by `BIN` (uint32 chunkLength, uint32 chunkType)
 
 The binary chunk header has a field that marks the length of the binary chunk and a type marked `BIN`.
 
-- A single binary chunk
+- A single binary chunk (ubyte[] chunkData)
 
 The binary chunk contains a single `Uint8Array` typed array buffer that has been constructed out of concatenated files. Using the data described in the JSON chunk one can correctly extract the file from the binary chunk.
 
