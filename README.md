@@ -23,6 +23,8 @@ A `Binpacker` file has the following structure (very similar to the [GLB File Fo
 
 ![file_structure](/docs/file_structure.png?raw=true)
 
+_Figure from [GLB File Format Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0)_
+
 ### Endianness
 
 Binpacker is little endian.
