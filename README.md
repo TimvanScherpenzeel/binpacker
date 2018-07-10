@@ -1,6 +1,5 @@
 # Binpacker
 
-[![npm version](https://badge.fury.io/js/binpacker.svg)](https://badge.fury.io/js/binpacker)
 [![dependencies](https://david-dm.org/timvanscherpenzeel/binpacker.svg)](https://david-dm.org/timvanscherpenzeel/binpacker)
 [![devDependencies](https://david-dm.org/timvanscherpenzeel/binpacker/dev-status.svg)](https://david-dm.org/timvanscherpenzeel/binpacker#info=devDependencies)
 
