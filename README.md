@@ -24,11 +24,11 @@ $ node ./bin/binpacker.js -i ./input -o ./output/example.binpack
 
     -i, --input [example: ./input] [required]
 
-    Input takes an entry point folder and will glob collect files from child folders
+    Input takes a single entry point folder and will glob collect files from child folders
 
     -o, --output [example: ./output/example.binpack] [required]
 
-    Output defines a filename
+    Output takes the desired filename in optionally a desired existing directory (is not created for you)
 
 ## Licence
 
