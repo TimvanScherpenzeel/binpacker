@@ -24,6 +24,8 @@ A `Binpacker` file has the following structure (very similar to the [GLB File Fo
 
 ![file_structure](/docs/file_structure.png?raw=true)
 
+### Header
+
 - A 12-byte header
 
 The 12-byte header consists of three 4-byte entries:
@@ -40,17 +42,25 @@ uint32 length
 
 - `length` is the total length of the Binpacker file, including Header and all Chunks, in bytes.
 
+### JSON chunk header
+
 - A single JSON chunk header marked by `JSON` in ASCII (uint32 chunkLength, uint32 chunkType)
 
 The JSON chunk header has a field that marks the length of the JSON chunk and a type marked `JSON` in ASCII.
+
+### JSON chunk
 
 - A single JSON chunk (ubyte[] chunkData)
 
 The JSON chunk contains a stringified JSON description of the processed files: `name`, `bufferStart`, `bufferEnd` and `mimeType`. The difference between `bufferStart` and `bufferEnd` describe the length of the file. This length is used to extract the correct amount of bytes per file from the binary chunk that follows next.
 
+### Binary chunk header
+
 - A single binary chunk header marked by `BIN` in ASCII (uint32 chunkLength, uint32 chunkType)
 
 The binary chunk header has a field that marks the length of the binary chunk and a type marked `BIN` in ASCII.
+
+### Binary chunk
 
 - A single binary chunk (ubyte[] chunkData)
 
