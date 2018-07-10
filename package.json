@@ -5,6 +5,13 @@
   "main": "index.js",
   "author": "Tim van Scherpenzeel",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint lib/**/*.js",
+    "deploy": "npm version patch && npm publish && git push origin"
+  },
+  "bin": {
+    "binpacker": "./bin/binpacker.js"
+  },
   "dependencies": {
     "argparse": "^1.0.10",
     "glob": "^7.1.2",
