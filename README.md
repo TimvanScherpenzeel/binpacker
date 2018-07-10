@@ -30,6 +30,6 @@ $ node ./bin/binpacker.js -i ./input -o ./output/example.binpack
 
     Output takes the desired filename in optionally a desired existing directory (is not created for you)
 
-## Licence
+## License
 
-`binpacker` is released under the [MIT licence](https://raw.githubusercontent.com/TimvanScherpenzeel/binpacker/master/LICENSE).
+`binpacker` is released under the [MIT license](https://raw.githubusercontent.com/TimvanScherpenzeel/binpacker/master/LICENSE).
