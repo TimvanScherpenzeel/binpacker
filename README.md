@@ -23,6 +23,10 @@ A `Binpacker` file has the following structure (very similar to the [GLB File Fo
 
 ![file_structure](/docs/file_structure.png?raw=true)
 
+### Endianness
+
+Binpacker is little endian.
+
 ### Header
 
 _A 12-byte header_
