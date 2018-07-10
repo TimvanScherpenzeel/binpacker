@@ -22,6 +22,8 @@ $ node ./bin/binpacker.js -i ./input -o ./output/example.binpack
 
 A `Binpacker` file has the following structure (very similar to the [GLB File Format Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification)):
 
+![file_structure](/docs/file_structure.png?raw=true)
+
 - A 12-byte header
 
 The header consists out a magic byte `BINP`, a version number `1` and the total file length.
