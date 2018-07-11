@@ -79,13 +79,9 @@ The binary chunk (`ubyte[] chunkData`) contains a single `Uint8Array` typed arra
 
 ### Required
 
-    -i, --input [example: ./input] [required]
-
-    Input takes a single entry point folder and will glob collect files from child folders
+    -i, --input [example: ./input (glob) or ./input/manifest.json (manifest)] [required]
 
     -o, --output [example: ./output/example.binpack] [required]
-
-    Output takes the desired filename in optionally a desired existing directory (is not created for you)
 
 ## License
 
