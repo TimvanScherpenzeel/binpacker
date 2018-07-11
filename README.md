@@ -29,9 +29,7 @@ _Figure from [GLB File Format Specification](https://github.com/KhronosGroup/glT
 
 Binpacker is little endian.
 
-### Header
-
-_A 12-byte header_
+### 12-byte header
 
 The 12-byte header consists of three 4-byte entries:
 
@@ -49,27 +47,27 @@ uint32 length
 
 ### JSON chunk header
 
-_A single JSON chunk header marked by `JSON` in ASCII (`uint32 chunkLength`, `uint32 chunkType`)_
+_A single JSON chunk header_
 
-The JSON chunk header has a field that marks the length of the JSON chunk and a type marked `JSON` in ASCII.
+The JSON chunk header has a field that marks the length of the JSON chunk (`uint32 chunkLength`) and a type (`uint32 chunkType`) marked `JSON` in ASCII.
 
 ### JSON chunk
 
-_A single JSON chunk (`ubyte[] chunkData`)_
+_A single JSON chunk_
 
-The JSON chunk contains a stringified JSON description of the processed files: `name`, `bufferStart`, `bufferEnd` and `mimeType`. The difference between `bufferStart` and `bufferEnd` describe the length of the file. This length is used to extract the correct amount of bytes per file from the binary chunk that follows next.
+The JSON chunk (`ubyte[] chunkData`) contains a stringified JSON description of the processed files: `name`, `bufferStart`, `bufferEnd` and `mimeType`. The difference between `bufferStart` and `bufferEnd` describe the length of the file. This length is used to extract the correct amount of bytes per file from the binary chunk that follows next.
 
 ### Binary chunk header
 
-_A single binary chunk header marked by `BIN` in ASCII (`uint32 chunkLength`, `uint32 chunkType`)_
+_A single binary chunk header_
 
-The binary chunk header has a field that marks the length of the binary chunk and a type marked `BIN` in ASCII.
+The binary chunk header has a field that marks the length of the binary chunk (`uint32 chunkLength`) and a type (`uint32 chunkType`) marked `BIN` in ASCII.
 
 ### Binary chunk
 
-_A single binary chunk (`ubyte[] chunkData`)_
+_A single binary chunk_
 
-The binary chunk contains a single `Uint8Array` typed array buffer that has been constructed out of concatenated files. Using the data described in the JSON chunk one can correctly extract the file from the binary chunk.
+The binary chunk (`ubyte[] chunkData`) contains a single `Uint8Array` typed array buffer that has been constructed out of concatenated files. Using the data described in the JSON chunk one can correctly extract the file from the binary chunk.
 
 ## Flags
 
