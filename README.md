@@ -5,6 +5,8 @@
 
 CLI tool for packing multiple files into a single binary in order to save network requests in the browser.
 
+Inspired by [GLB File Format Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification), [MM.Loader](https://github.com/MM56/MM.Loader), [Magipack.js](https://github.com/keitakun/Magipack.js) and [this Twitter thread](https://twitter.com/tvscherpenzeel/status/1015124298812489728).
+
 ## Installation
 
 ```sh
