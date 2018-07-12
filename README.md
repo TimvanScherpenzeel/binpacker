@@ -1,5 +1,6 @@
 # Binpacker
 
+[![npm version](https://badge.fury.io/js/%40timvanscherpenzeel%2Fbinpacker.svg)](https://www.npmjs.com/package/@timvanscherpenzeel/binpacker)
 [![dependencies](https://david-dm.org/timvanscherpenzeel/binpacker.svg)](https://david-dm.org/timvanscherpenzeel/binpacker)
 [![devDependencies](https://david-dm.org/timvanscherpenzeel/binpacker/dev-status.svg)](https://david-dm.org/timvanscherpenzeel/binpacker#info=devDependencies)
 
@@ -10,7 +11,7 @@ Inspired by [GLB File Format Specification](https://github.com/KhronosGroup/glTF
 ## Installation
 
 ```sh
-$ npm install -g --save binpacker
+$ npm install -g --save @timvanscherpenzeel/binpacker
 ```
 
 ## Example
