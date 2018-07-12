@@ -1,5 +1,5 @@
 {
-  "name": "binpacker",
+  "name": "@timvanscherpenzeel/binpacker",
   "version": "0.0.1",
   "description": "CLI tool for packing multiple files into a single binary in order to save network requests in the browser.",
   "main": "index.js",
