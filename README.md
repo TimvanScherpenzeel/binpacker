@@ -10,9 +10,7 @@ Inspired by [GLB File Format Specification](https://github.com/KhronosGroup/glTF
 
 ## Live demo
 
-[Binpack-loader](https://github.com/timvanscherpenzeel/binpacker-loader) efficiently extracts packed files in a web worker from a single Binpack binary.
-
-[Live demo](https://timvanscherpenzeel.github.io/binpacker-loader/).
+[Live demo](https://timvanscherpenzeel.github.io/binpacker-loader/) of [binpack-loader](https://github.com/timvanscherpenzeel/binpacker-loader) to efficiently extract packed files in a web worker from a single Binpack binary.
 
 ## Installation
 
