@@ -1,13 +1,15 @@
 {
   "name": "@timvanscherpenzeel/binpacker",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "CLI tool for packing multiple files into a single binary in order to save network requests in the browser.",
-  "main": "index.js",
+  "main": "dist/cli/lib/index.js",
   "author": "Tim van Scherpenzeel",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint lib/**/*.js",
-    "deploy": "npm version patch && npm publish && git push origin"
+    "start": "tsc -w",
+    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "prebuild": "rimraf dist",
+    "build": "tsc"
   },
   "bin": {
     "binpacker": "./bin/binpacker.js"
@@ -18,10 +20,20 @@
     "mime-types": "^2.1.20"
   },
   "devDependencies": {
-    "eslint": "^5.5.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "prettier": "^1.14.2",
-    "prettier-eslint": "^8.8.2"
+    "@types/argparse": "^1.0.36",
+    "@types/glob": "^7.1.1",
+    "@types/mime-types": "^2.1.0",
+    "@types/node": "^12.0.2",
+    "prettier": "^1.17.1",
+    "rimraf": "^2.6.3",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.5"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "printWidth": 100
   }
 }
