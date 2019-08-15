@@ -25,4 +25,5 @@ export const SUPPORTED_INPUT_TYPES = [
   '.glsl',
   '.frag',
   '.vert',
+  '.svg',
 ];

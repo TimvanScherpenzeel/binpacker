@@ -113,14 +113,18 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
 
   return new Promise((resolve): void => {
     getFiles(args.input).then(fileList => {
-      console.log('Processing the following files:');
+      if (args.verbose) {
+        console.log('Processing the following files:');
+      }
 
       const buffers: any[] = [];
       const data: any[] = [];
       let bufferOffset = 0;
 
       fileList.forEach(file => {
-        console.log(`- ${file}`);
+        if (args.verbose) {
+          console.log(`- ${file}`);
+        }
 
         const inputFileExtension = getFileExtension(file);
 
@@ -183,11 +187,13 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
         `${getFilePath(args.output)}${getFileName(args.output)}${getFileExtension(args.output)}`,
         binpack,
         () => {
-          console.log(
-            `\nWrote to ${getFilePath(args.output)}${getFileName(args.output)}${getFileExtension(
-              args.output
-            )}`
-          );
+          if (args.verbose) {
+            console.log(
+              `\nWrote to ${getFilePath(args.output)}${getFileName(args.output)}${getFileExtension(
+                args.output
+              )}`
+            );
+          }
 
           resolve();
         }

@@ -26,12 +26,20 @@ const createParserArguments = (): ICLIArgs => {
     required: true,
   });
 
+  // Verbose logging
+  parser.addArgument(['-vb', '--verbose'], {
+    action: 'storeTrue',
+    help: 'Enable verbose logging',
+    required: false,
+  });
+
   return parser.parseArgs();
 };
 
 export interface ICLIArgs {
   input: string;
   output: string;
+  verbose?: boolean;
 }
 
 export const CLIArgs = createParserArguments();

@@ -17,11 +17,11 @@ $ npm install -g --save @timvanscherpenzeel/binpacker
 ## CLI Usage
 
 ```sh
-$ node ./bin/binpacker.js -i ./input -o ./output/example.binpack
+$ node ./bin/binpacker.js -i ./input -o ./output/example.binpack -vb
 ```
 
 ```sh
-$ node ./bin/binpacker.js -i ./input/manifest.json -o ./output/example.binpack
+$ node ./bin/binpacker.js -i ./input/manifest.json -o ./output/example.binpack -vb
 ```
 
 ## File structure
