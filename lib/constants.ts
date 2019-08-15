@@ -5,11 +5,6 @@ export const SUPPORTED_INPUT_TYPES = [
   '.webp',
   '.gif',
 
-  // Compressed image formats
-  '.ktx',
-  '.dds',
-  '.pvr',
-
   // Audio
   '.ogg',
   '.mp3',

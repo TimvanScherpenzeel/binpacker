@@ -68,22 +68,8 @@ const getFileList = (inputPath: string): Promise<string[]> => {
  */
 const getMimeType = (inputPath: string): string => {
   const fileExtension = getFileExtension(inputPath);
-  let mimeType = mimeTypes.lookup(fileExtension);
 
-  if (!mimeType) {
-    switch (fileExtension) {
-      case '.dds':
-      case '.pvr':
-      case '.glb':
-        mimeType = 'application/octet-stream';
-        break;
-      default:
-        mimeType = 'text/plain';
-        break;
-    }
-  }
-
-  return mimeType;
+  return mimeTypes.lookup(fileExtension) || 'text/plain';
 };
 
 /**
