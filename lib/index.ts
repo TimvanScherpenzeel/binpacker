@@ -23,7 +23,7 @@ import { getFileExtension, getFileName, getFilePath, isDirectory } from './utili
 const getFileList = (inputPath: string): Promise<string[]> => {
   if (isDirectory(inputPath)) {
     return new Promise((resolve, reject): any => {
-      glob(`${inputPath}/**/*`, (error: Error | null, globList: any): void => {
+      glob(`${inputPath}/**/*`, (error: Error | null, globList: string[]): void => {
         if (error) {
           reject(error);
         }
@@ -77,7 +77,14 @@ const getMimeType = (inputPath: string): string => {
  *
  * @param inputData Input data
  */
-const getJSONBufferPadded = (inputData: string[]): Buffer => {
+const getJSONBufferPadded = (
+  inputData: Array<{
+    bufferEnd: number;
+    bufferStart: number;
+    mimeType: string;
+    name: string;
+  }>
+): Buffer => {
   let str = JSON.stringify(inputData);
 
   const boundary = 4;
@@ -113,8 +120,13 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
         console.log('Processing the following files:\n');
       }
 
-      const buffers: any[] = [];
-      const data: any[] = [];
+      const buffers: Buffer[] = [];
+      const data: Array<{
+        bufferEnd: number;
+        bufferStart: number;
+        mimeType: string;
+        name: string;
+      }> = [];
       let bufferOffset = 0;
 
       fileList.forEach(file => {
