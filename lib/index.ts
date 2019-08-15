@@ -15,10 +15,15 @@ import { SUPPORTED_INPUT_TYPES } from './constants';
 // Utilities
 import { getFileExtension, getFileName, getFilePath, isDirectory } from './utilities';
 
-const getFiles = (input: string): Promise<string[]> => {
-  if (isDirectory(input)) {
+/**
+ * Get a recursive listing of files either by a manifest.json file or input directory
+ *
+ * @param inputPath Input path
+ */
+const getFileList = (inputPath: string): Promise<string[]> => {
+  if (isDirectory(inputPath)) {
     return new Promise((resolve, reject): any => {
-      glob(`${input}/**/*`, (error: Error | null, globList: any): void => {
+      glob(`${inputPath}/**/*`, (error: Error | null, globList: any): void => {
         if (error) {
           reject(error);
         }
@@ -28,9 +33,9 @@ const getFiles = (input: string): Promise<string[]> => {
     });
   }
 
-  if (getFileName(input) === 'manifest' && getFileExtension(input) === '.json') {
+  if (getFileName(inputPath) === 'manifest' && getFileExtension(inputPath) === '.json') {
     return new Promise((resolve, reject): any => {
-      const manifestContent = JSON.parse(fs.readFileSync(input, 'utf8'));
+      const manifestContent = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
       const manifestFiles = manifestContent.manifest.map(
         (manifestEntry: string): string => `${manifestContent.path}${manifestEntry}`
       );
@@ -41,9 +46,9 @@ const getFiles = (input: string): Promise<string[]> => {
         if (!manifestFiles) {
           reject(
             new Error(
-              `Unable to read manifest in ${getFilePath(input)}${getFileName(
-                input
-              )}${getFileExtension(input)}`
+              `Unable to read manifest in ${getFilePath(inputPath)}${getFileName(
+                inputPath
+              )}${getFileExtension(inputPath)}`
             )
           );
         }
@@ -56,7 +61,7 @@ const getFiles = (input: string): Promise<string[]> => {
   throw new Error('Input must either be a directory or a JSON configuration');
 };
 
-const resolveMimeType = (filepath: string): string => {
+const getMimeType = (filepath: string): string => {
   const fileExtension = getFileExtension(filepath);
   let mimeType = mimeTypes.lookup(fileExtension);
 
@@ -76,6 +81,11 @@ const resolveMimeType = (filepath: string): string => {
   return mimeType;
 };
 
+/**
+ * Pad a JSON buffer to make sure it is 4-byte aligned
+ *
+ * @param json
+ */
 const getJSONBufferPadded = (json: any[]): Buffer => {
   let str = JSON.stringify(json);
 
@@ -107,7 +117,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
   }
 
   return new Promise((resolve): void => {
-    getFiles(args.input).then(fileList => {
+    getFileList(args.input).then(fileList => {
       if (args.verbose) {
         console.log('Processing the following files:');
       }
@@ -124,7 +134,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
         const inputFileExtension = getFileExtension(file);
 
         if (SUPPORTED_INPUT_TYPES.includes(inputFileExtension)) {
-          const mimeType = resolveMimeType(file);
+          const mimeType = getMimeType(file);
           const fileSize = fs.statSync(file).size;
           const fileContent = fs.readFileSync(file);
 
