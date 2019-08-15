@@ -193,6 +193,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
       // Write binary chunk
       binaryBuffer.copy(binpack, byteOffset);
 
+      // Write the file to disk
       fs.writeFile(
         `${getFilePath(args.output)}${getFileName(args.output)}${getFileExtension(args.output)}`,
         binpack,
