@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Vendor
+import glob from 'glob';
 import mimeTypes from 'mime-types';
 
 // Arguments
@@ -12,18 +13,12 @@ import { ICLIArgs } from './argsHandler';
 import { SUPPORTED_INPUT_TYPES } from './constants';
 
 // Utilities
-import {
-  getDirectoriesByGlob,
-  getFileExtension,
-  getFileName,
-  getFilePath,
-  isDirectory,
-} from './utilities';
+import { getFileExtension, getFileName, getFilePath, isDirectory } from './utilities';
 
 const getFiles = (input: string): Promise<string[]> => {
   if (isDirectory(input)) {
     return new Promise((resolve, reject): any => {
-      getDirectoriesByGlob(input, (error: string, globList: any) => {
+      glob(`${input}/**/*`, (error: Error | null, globList: any): void => {
         if (error) {
           reject(error);
         }
