@@ -1,6 +1,6 @@
 // Native
-import fs from 'fs';
-import path from 'path';
+import { readFileSync, statSync, writeFile } from 'fs';
+import { parse, resolve as resolvePath } from 'path';
 
 // Vendor
 import glob from 'glob';
@@ -28,14 +28,14 @@ const getFileList = (inputPath: string): Promise<string[]> => {
           reject(error);
         }
 
-        resolve(globList.filter((file: string): boolean => !isDirectory(path.resolve(file))));
+        resolve(globList.filter((file: string): boolean => !isDirectory(resolvePath(file))));
       });
     });
   }
 
   if (getFileName(inputPath) === 'manifest' && getFileExtension(inputPath) === '.json') {
     return new Promise((resolve, reject): any => {
-      const manifestContent = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
+      const manifestContent = JSON.parse(readFileSync(inputPath, 'utf8'));
       const manifestFiles = manifestContent.manifest.map(
         (manifestEntry: string): string => `${manifestContent.path}${manifestEntry}`
       );
@@ -97,8 +97,8 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
 
         if (SUPPORTED_INPUT_TYPES.includes(inputFileExtension)) {
           const mimeType = mimeTypes.lookup(inputFileExtension) || 'text/plain';
-          const fileSize = fs.statSync(file).size;
-          const fileContent = fs.readFileSync(file);
+          const fileSize = statSync(file).size;
+          const fileContent = readFileSync(file);
 
           buffers.push(fileContent);
 
@@ -106,7 +106,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
             bufferEnd: bufferOffset + fileSize,
             bufferStart: bufferOffset,
             mimeType,
-            name: path.parse(file).base,
+            name: parse(file).base,
           });
 
           bufferOffset += fileSize;
@@ -175,7 +175,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
       binaryBuffer.copy(binpack, byteOffset);
 
       // Write the file to disk
-      fs.writeFile(
+      writeFile(
         `${getFilePath(args.output)}${getFileName(args.output)}${getFileExtension(args.output)}`,
         binpack,
         () => {
