@@ -110,7 +110,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
   return new Promise((resolve): void => {
     getFileList(args.input).then(fileList => {
       if (args.verbose) {
-        console.log('Processing the following files:');
+        console.log('Processing the following files:\n');
       }
 
       const buffers: any[] = [];
