@@ -26,7 +26,7 @@ $ node ./bin/binpacker.js -i ./input/manifest.json -o ./output/example.binpack -
 
 ## File structure
 
-A `Binpacker` file has the following structure (very similar to the [GLB File Format Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification)):
+A `.binpack` file has the following structure (very similar to the [GLB File Format Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification)):
 
 ![file_structure](/docs/file_structure.png?raw=true)
 
