@@ -1,6 +1,6 @@
 {
   "name": "@timvanscherpenzeel/binpacker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CLI tool for packing multiple files into a single binary in order to save network requests in the browser.",
   "main": "dist/cli/lib/index.js",
   "author": "Tim van Scherpenzeel",
