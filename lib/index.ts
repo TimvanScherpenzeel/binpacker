@@ -62,17 +62,6 @@ const getFileList = (inputPath: string): Promise<string[]> => {
 };
 
 /**
- * Get the matching mimetype based on file extension
- *
- * @param inputPath Path to file
- */
-const getMimeType = (inputPath: string): string => {
-  const fileExtension = getFileExtension(inputPath);
-
-  return mimeTypes.lookup(fileExtension) || 'text/plain';
-};
-
-/**
  * Pad a JSON buffer to make sure it is 4-byte aligned
  *
  * @param inputData Input data
@@ -137,7 +126,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
         const inputFileExtension = getFileExtension(file);
 
         if (SUPPORTED_INPUT_TYPES.includes(inputFileExtension)) {
-          const mimeType = getMimeType(file);
+          const mimeType = mimeTypes.lookup(inputFileExtension) || 'text/plain';
           const fileSize = fs.statSync(file).size;
           const fileContent = fs.readFileSync(file);
 
