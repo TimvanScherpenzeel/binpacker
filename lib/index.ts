@@ -62,36 +62,6 @@ const getFileList = (inputPath: string): Promise<string[]> => {
 };
 
 /**
- * Pad a JSON buffer to make sure it is 4-byte aligned
- *
- * @param inputData Input data
- */
-const getJSONBufferPadded = (
-  inputData: Array<{
-    bufferEnd: number;
-    bufferStart: number;
-    mimeType: string;
-    name: string;
-  }>
-): Buffer => {
-  let str = JSON.stringify(inputData);
-
-  const boundary = 4;
-  const byteLength = Buffer.byteLength(str);
-  const remainder = byteLength % boundary;
-  const padding = remainder === 0 ? 0 : boundary - remainder;
-  let whitespace = '';
-
-  for (let i = 0; i < padding; i++) {
-    whitespace += ' ';
-  }
-
-  str += whitespace;
-
-  return Buffer.from(str);
-};
-
-/**
  * Pack a files into a single binpack format
  */
 export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
@@ -145,7 +115,22 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
         }
       });
 
-      const jsonBuffer = getJSONBufferPadded(data);
+      // Pad the JSON data to 4-byte chunks
+      let jsonData = JSON.stringify(data);
+
+      const boundary = 4;
+      const byteLength = Buffer.byteLength(jsonData);
+      const remainder = byteLength % boundary;
+      const padding = remainder === 0 ? 0 : boundary - remainder;
+      let whitespace = '';
+
+      for (let i = 0; i < padding; i++) {
+        whitespace += ' ';
+      }
+
+      jsonData += whitespace;
+
+      const jsonBuffer = Buffer.from(jsonData);
       const binaryBuffer = Buffer.concat(buffers);
 
       // Allocate buffer (Global header) + (JSON chunk header) + (JSON chunk) + (Binary chunk header) + (Binary chunk)
