@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/%40timvanscherpenzeel%2Fbinpacker.svg)](https://www.npmjs.com/package/@timvanscherpenzeel/binpacker)
 
 CLI tool for packing multiple files into a single Binpack binary in order to save network requests in the browser.
+You can use `Binpacker` as an efficient replacement for spritesheets.
 
 Inspired by [GLB File Format Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification), [MM.Loader](https://github.com/MM56/MM.Loader), [MM.Packer](https://github.com/MM56/mm-packer), [Magipack.js](https://github.com/keitakun/Magipack.js) and [this Twitter thread](https://twitter.com/tvscherpenzeel/status/1015124298812489728).
 
@@ -34,7 +35,7 @@ _Figure from the [GLB File Format Specification](https://github.com/KhronosGroup
 
 ### Endianness
 
-Binpacker is little endian.
+`Binpacker` is little endian.
 
 ### 12-byte header
 
@@ -46,11 +47,11 @@ uint32 version
 uint32 length
 ```
 
-- `magic` equals `0x504e4942`. It is ASCII string `BINP`, and can be used to identify data as Binpacker.
+- `magic` equals `0x504e4942`. It is ASCII string `BINP`, and can be used to identify data as `Binpacker`.
 
-- `version` indicates the version of the Binpacker. This specification defines version 1.
+- `version` indicates the version of the `Binpacker`. This specification defines version 1.
 
-- `length` is the total length of the Binpacker file, including Header and all Chunks, in bytes.
+- `length` is the total length of the `Binpacker` file, including Header and all Chunks, in bytes.
 
 ### JSON chunk header
 
