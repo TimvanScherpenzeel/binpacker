@@ -136,22 +136,26 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
       const binpackBufferLength = 12 + 8 + jsonBuffer.length + 8 + binaryBuffer.length;
       const binpack = Buffer.alloc(binpackBufferLength);
 
-      // Write binary header (magic, version, length)
+      // Keep track of the internal byte offset
       let byteOffset = 0;
 
+      // Write BINPACK magic
       binpack.writeUInt32LE(0x504e4942, 0); // BINP
       byteOffset += 4;
 
+      // Write BINPACK version
       binpack.writeUInt32LE(1, byteOffset);
       byteOffset += 4;
 
+      // Write BINPACK length
       binpack.writeUInt32LE(binpackBufferLength, byteOffset);
       byteOffset += 4;
 
-      // Write JSON chunk header (length, type)
+      // WRITE JSON buffer length
       binpack.writeUInt32LE(jsonBuffer.length, byteOffset);
       byteOffset += 4;
 
+      // Write JSON chunk header (length, type)
       binpack.writeUInt32LE(0x4e4f534a, byteOffset); // JSON
       byteOffset += 4;
 
