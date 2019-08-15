@@ -118,10 +118,10 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
       // Pad the JSON data to 4-byte chunks
       let jsonData = JSON.stringify(data);
 
-      const boundary = 4;
-      const byteLength = Buffer.byteLength(jsonData);
-      const remainder = byteLength % boundary;
-      const padding = remainder === 0 ? 0 : boundary - remainder;
+      const remainder = Buffer.byteLength(jsonData) % 4;
+      const padding = remainder === 0 ? 0 : 4 - remainder;
+
+      // TODO: make this more elegant
       let whitespace = '';
 
       for (let i = 0; i < padding; i++) {
