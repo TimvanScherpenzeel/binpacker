@@ -61,8 +61,13 @@ const getFileList = (inputPath: string): Promise<string[]> => {
   throw new Error('Input must either be a directory or a JSON configuration');
 };
 
-const getMimeType = (filepath: string): string => {
-  const fileExtension = getFileExtension(filepath);
+/**
+ * Get the matching mimetype based on file extension
+ *
+ * @param inputPath Path to file
+ */
+const getMimeType = (inputPath: string): string => {
+  const fileExtension = getFileExtension(inputPath);
   let mimeType = mimeTypes.lookup(fileExtension);
 
   if (!mimeType) {
@@ -84,10 +89,10 @@ const getMimeType = (filepath: string): string => {
 /**
  * Pad a JSON buffer to make sure it is 4-byte aligned
  *
- * @param json
+ * @param inputData Input data
  */
-const getJSONBufferPadded = (json: any[]): Buffer => {
-  let str = JSON.stringify(json);
+const getJSONBufferPadded = (inputData: string[]): Buffer => {
+  let str = JSON.stringify(inputData);
 
   const boundary = 4;
   const byteLength = Buffer.byteLength(str);
