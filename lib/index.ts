@@ -101,6 +101,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
           const fileContent = fs.readFileSync(file);
 
           buffers.push(fileContent);
+
           data.push({
             bufferEnd: bufferOffset + fileSize,
             bufferStart: bufferOffset,
@@ -117,11 +118,8 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
 
       // Pad the JSON data to 4-byte chunks
       let jsonData = JSON.stringify(data);
-
       const remainder = Buffer.byteLength(jsonData) % 4;
       const padding = remainder === 0 ? 0 : 4 - remainder;
-
-      // TODO: make this more elegant
       let whitespace = '';
 
       for (let i = 0; i < padding; i++) {
@@ -130,6 +128,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
 
       jsonData += whitespace;
 
+      // Create the JSON and BIN buffer
       const jsonBuffer = Buffer.from(jsonData);
       const binaryBuffer = Buffer.concat(buffers);
 
