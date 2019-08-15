@@ -83,6 +83,10 @@ The binary chunk (`ubyte[] chunkData`) contains a single `Uint8Array` typed arra
     -i, --input [example: ./input (glob) or ./input/manifest.json (manifest)] [required]
     -o, --output [example: ./output/example.binpack] [required]
 
+### Optional
+
+    -vb, --verbose [true / false, default: false] [not required]
+
 ## License
 
 My work is released under the [MIT license](https://raw.githubusercontent.com/TimvanScherpenzeel/binpacker/master/LICENSE).
