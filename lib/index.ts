@@ -151,11 +151,11 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
       binpack.writeUInt32LE(binpackBufferLength, byteOffset);
       byteOffset += 4;
 
-      // WRITE JSON buffer length
+      // Write JSON buffer length
       binpack.writeUInt32LE(jsonBuffer.length, byteOffset);
       byteOffset += 4;
 
-      // Write JSON chunk header (length, type)
+      // Write JSON chunk magic
       binpack.writeUInt32LE(0x4e4f534a, byteOffset); // JSON
       byteOffset += 4;
 
@@ -163,14 +163,15 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
       jsonBuffer.copy(binpack, byteOffset);
       byteOffset += jsonBuffer.length;
 
-      // Write binary chunk header (length, type)
+      // Write BIN chunk length
       binpack.writeUInt32LE(binaryBuffer.length, byteOffset);
       byteOffset += 4;
 
+      // Write BIN chunk magic
       binpack.writeUInt32LE(0x004e4942, byteOffset); // BIN
       byteOffset += 4;
 
-      // Write binary chunk
+      // Write BIN chunk
       binaryBuffer.copy(binpack, byteOffset);
 
       // Write the file to disk
