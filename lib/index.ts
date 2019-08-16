@@ -119,14 +119,11 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
       // Pad the JSON data to 4-byte chunks
       let jsonData = JSON.stringify(data);
       const remainder = Buffer.byteLength(jsonData) % 4;
-      const padding = remainder === 0 ? 0 : 4 - remainder;
-      let whitespace = '';
+      jsonData = jsonData.padEnd(jsonData.length + (remainder === 0 ? 0 : 4 - remainder), ' ');
 
-      for (let i = 0; i < padding; i++) {
-        whitespace += ' ';
+      if (args.verbose) {
+        console.log(`\n${jsonData}: ${jsonData.length}`);
       }
-
-      jsonData += whitespace;
 
       // Create the JSON and BIN buffer
       const jsonBuffer = Buffer.from(jsonData);
