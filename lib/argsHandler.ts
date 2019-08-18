@@ -17,7 +17,7 @@ const createParserArguments = (): ICLIArgs => {
   // File input flag
   parser.addArgument(['-i', '--input'], {
     help: 'Input file including path',
-    required: false,
+    required: true,
   });
 
   // File output flag
