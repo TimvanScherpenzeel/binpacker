@@ -122,7 +122,7 @@ export const pack = (CLIArgs?: ICLIArgs): Promise<any> => {
       jsonData = jsonData.padEnd(jsonData.length + (remainder === 0 ? 0 : 4 - remainder), ' ');
 
       if (args.verbose) {
-        console.log(`\n${jsonData}: ${jsonData.length}`);
+        console.log(`\n${jsonData}`);
       }
 
       // Create the JSON and BIN buffer
