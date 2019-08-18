@@ -1,0 +1,11 @@
+{
+  "path": "./input/",
+  "manifest": [
+    {
+      "src": "icon-twitter.svg"
+    },
+    {
+      "src": "spritesheet (2).json"
+    }
+  ]
+}
