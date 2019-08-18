@@ -25,6 +25,25 @@ $ node ./bin/binpacker.js -i ./input -o ./output/example.binpack -vb
 $ node ./bin/binpacker.js -i ./input/manifest.json -o ./output/example.binpack -vb
 ```
 
+## Manifest structure
+
+```
+{
+  "path": "./input/",
+  "manifest": [
+    {
+      "src": "icon-twitter.svg"
+    },
+    {
+      "src": "spritesheet (2).json"
+    },
+    {
+      "src": "texture.jpg"
+    }
+  ]
+}
+```
+
 ## File structure
 
 A `.binpack` file has the following structure (very similar to the [GLB File Format Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification)):
@@ -35,7 +54,7 @@ _Figure from the [GLB File Format Specification](https://github.com/KhronosGroup
 
 ### Endianness
 
-`Binpacker` is little endian.
+`Binpack` is little endian.
 
 ### 12-byte header
 
@@ -47,11 +66,11 @@ uint32 version
 uint32 length
 ```
 
-- `magic` equals `0x504e4942`. It is ASCII string `BINP`, and can be used to identify data as `Binpacker`.
+- `magic` equals `0x504e4942`. It is ASCII string `BINP`, and can be used to identify data as `Binpack`.
 
-- `version` indicates the version of the `Binpacker`. This specification defines version 1.
+- `version` indicates the version of the `Binpack`. This specification defines version 1.
 
-- `length` is the total length of the `Binpacker` file, including Header and all Chunks, in bytes.
+- `length` is the total length of the `Binpack` file, including Header and all Chunks, in bytes.
 
 ### JSON chunk header
 

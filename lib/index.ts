@@ -37,7 +37,7 @@ const getFileList = (inputPath: string): Promise<string[]> => {
     return new Promise((resolve, reject): any => {
       const manifestContent = JSON.parse(readFileSync(inputPath, 'utf8'));
       const manifestFiles = manifestContent.manifest.map(
-        (manifestEntry: string): string => `${manifestContent.path}${manifestEntry}`
+        (manifestEntry: { src: string }): string => `${manifestContent.path}${manifestEntry.src}`
       );
 
       if (manifestFiles.length < 1) {
