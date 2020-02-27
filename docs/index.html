@@ -340,15 +340,29 @@
                   if (name && blob && mimeType) {
                     if (mimeType === 'image/png' || mimeType === 'image/jpeg') {
                       const imageUrl = URL.createObjectURL(blob);
-                      const image = new window.Image();
+                      const image = new Image();
 
-                      image.onload = () => {
-                        URL.revokeObjectURL(imageUrl);
-                      };
+                      if (image.decode) {
+                        image.src = imageUrl;
 
-                      image.src = imageUrl;
+                        image
+                          .decode()
+                          .then(() => {
+                            appElement.appendChild(image);
+                          })
+                          .catch(() => {
+                            reject();
+                          });
+                      } else {
+                        image.onload = () => {
+                          URL.revokeObjectURL(imageUrl);
+                        };
 
-                      appElement.appendChild(image);
+                        image.src = imageUrl;
+
+                        appElement.appendChild(image);
+                      }
+
                       resolve();
                     } else {
                       reject();
