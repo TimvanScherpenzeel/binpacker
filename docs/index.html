@@ -342,7 +342,7 @@
                       const imageUrl = URL.createObjectURL(blob);
                       const image = new Image();
 
-                      if (image.decode) {
+                      if (!!image.decode) {
                         image.src = imageUrl;
 
                         image
