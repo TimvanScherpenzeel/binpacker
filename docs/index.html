@@ -363,14 +363,14 @@
                         appElement.appendChild(image);
                       }
 
-                      resolve();
+                      resolve(image);
                     } else {
                       reject();
                     }
                   }
                 })
             )
-          ).then(() => console.log('Done'));
+          ).then(data => console.log('Done', data));
         })
         .catch(error => console.error(error));
     </script>
