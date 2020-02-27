@@ -1,0 +1,364 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binpacker</title>
+    <style>
+      @charset "utf-8";
+
+      *,
+      *:before,
+      *:after {
+        appearance: inherit;
+        box-sizing: inherit;
+      }
+
+      @-ms-viewport {
+        width: device-width;
+      }
+
+      html,
+      body,
+      div,
+      span,
+      applet,
+      object,
+      iframe,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      blockquote,
+      pre,
+      a,
+      abbr,
+      acronym,
+      address,
+      big,
+      cite,
+      code,
+      del,
+      dfn,
+      em,
+      img,
+      ins,
+      kbd,
+      q,
+      s,
+      samp,
+      small,
+      strike,
+      strong,
+      sub,
+      sup,
+      tt,
+      var,
+      b,
+      u,
+      i,
+      center,
+      dl,
+      dt,
+      dd,
+      ol,
+      ul,
+      li,
+      fieldset,
+      form,
+      label,
+      legend,
+      table,
+      caption,
+      tbody,
+      tfoot,
+      thead,
+      tr,
+      th,
+      td,
+      article,
+      aside,
+      canvas,
+      details,
+      embed,
+      figure,
+      figcaption,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      output,
+      ruby,
+      section,
+      summary,
+      time,
+      mark,
+      audio,
+      video {
+        margin: 0;
+        border: 0;
+        padding: 0;
+        vertical-align: baseline;
+        font: inherit;
+        font-size: 100%;
+      }
+
+      a,
+      area,
+      button,
+      [role='button'],
+      input,
+      label,
+      select,
+      summary,
+      textarea {
+        touch-action: manipulation;
+      }
+
+      a {
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      a,
+      a:hover,
+      a:active {
+        outline-width: 0;
+      }
+
+      img {
+        border-style: none;
+        vertical-align: middle;
+      }
+
+      svg:not(:root) {
+        overflow: hidden;
+      }
+
+      input,
+      textarea,
+      select {
+        -webkit-appearance: none;
+        margin: 0;
+        padding: 0;
+        outline: 0;
+        border: 0;
+        border-radius: 0;
+        background-color: transparent;
+      }
+
+      article,
+      aside,
+      details,
+      figcaption,
+      figure,
+      footer,
+      header,
+      hgroup,
+      main,
+      menu,
+      nav,
+      section,
+      summary {
+        display: block;
+      }
+
+      caption,
+      th,
+      td {
+        vertical-align: middle;
+        text-align: left;
+        font-weight: normal;
+      }
+
+      ol,
+      ul {
+        list-style: none;
+      }
+
+      blockquote,
+      q {
+        quotes: none;
+      }
+
+      blockquote:before,
+      blockquote:after,
+      q:before,
+      q:after {
+        content: '';
+      }
+
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+
+      button {
+        -webkit-appearance: none;
+        background: none;
+      }
+
+      html {
+        -webkit-appearance: none;
+        box-sizing: border-box;
+        -ms-overflow-style: scrollbar;
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+        -moz-text-size-adjust: none;
+        text-size-adjust: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -khtml-font-smoothing: antialiased;
+        -apple-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      img,
+      canvas {
+        height: auto;
+        max-width: 250px;
+        display: block;
+      }
+
+      body {
+        background: lightgrey;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      const appElement = document.getElementById('app');
+      const BINPACKER_HEADER_MAGIC = 'BINP';
+      const BINPACKER_HEADER_LENGTH = 12;
+      const BINPACKER_CHUNK_TYPE_JSON = 0x4e4f534a;
+      const BINPACKER_CHUNK_TYPE_BINARY = 0x004e4942;
+
+      const fileLoader = (url, responseType) => {
+        return new Promise((resolve, reject) => {
+          const request = new XMLHttpRequest();
+
+          request.responseType = responseType || '';
+          request.onreadystatechange = () => {
+            if (request.readyState !== 4) return;
+
+            if (request.readyState === 4 && request.status === 200) {
+              resolve(request.response, request.status);
+            } else {
+              reject(request.status);
+            }
+          };
+
+          request.open('GET', url, true);
+          request.send();
+        });
+      };
+
+      const convertUint8ArrayToString = array => {
+        let str = '';
+
+        array.map(item => (str += String.fromCharCode(item)));
+
+        return str;
+      };
+
+      fileLoader('output/example.binpack', 'arraybuffer')
+        .then(data => {
+          let content = null;
+          let contentArray = null;
+          let body = null;
+          let byteOffset = null;
+
+          let chunkIndex = 0;
+          let chunkLength = 0;
+          let chunkType = null;
+
+          const headerView = new DataView(data, BINPACKER_HEADER_LENGTH);
+          const header = {
+            magic: convertUint8ArrayToString(new Uint8Array(data, 0, 4)),
+            version: headerView.getUint32(4, true),
+            length: headerView.getUint32(8, true),
+          };
+
+          if (header.magic !== BINPACKER_HEADER_MAGIC) {
+            throw new Error('Unsupported Binpacker header');
+          }
+
+          const chunkView = new DataView(data, BINPACKER_HEADER_LENGTH);
+
+          while (chunkIndex < chunkView.byteLength) {
+            chunkLength = chunkView.getUint32(chunkIndex, true);
+            chunkIndex += 4;
+
+            chunkType = chunkView.getUint32(chunkIndex, true);
+            chunkIndex += 4;
+
+            if (chunkType === BINPACKER_CHUNK_TYPE_JSON) {
+              contentArray = new Uint8Array(
+                data,
+                BINPACKER_HEADER_LENGTH + chunkIndex,
+                chunkLength
+              );
+              content = convertUint8ArrayToString(contentArray);
+            } else if (chunkType === BINPACKER_CHUNK_TYPE_BINARY) {
+              byteOffset = BINPACKER_HEADER_LENGTH + chunkIndex;
+              body = data.slice(byteOffset, byteOffset + chunkLength);
+            }
+
+            chunkIndex += chunkLength;
+          }
+
+          if (content === null) {
+            throw new Error('JSON content not found');
+          }
+
+          const jsonChunk = JSON.parse(content);
+          const binaryChunk = body;
+
+          console.log(jsonChunk);
+
+          Promise.all(
+            jsonChunk.map(
+              entry =>
+                new Promise((resolve, reject) => {
+                  const { name, mimeType } = entry;
+                  const binary = binaryChunk.slice(entry.bufferStart, entry.bufferEnd);
+
+                  const blob = new Blob([new Uint8Array(binary)], {
+                    type: mimeType,
+                  });
+
+                  if (name && blob && mimeType) {
+                    if (mimeType === 'image/png' || mimeType === 'image/jpeg') {
+                      const imageUrl = URL.createObjectURL(blob);
+                      const image = new window.Image();
+
+                      image.onload = () => {
+                        URL.revokeObjectURL(imageUrl);
+                      };
+
+                      image.src = imageUrl;
+
+                      appElement.appendChild(image);
+                      resolve();
+                    } else {
+                      reject();
+                    }
+                  }
+                })
+            )
+          ).then(() => console.log('Done'));
+        })
+        .catch(error => console.error(error));
+    </script>
+  </body>
+</html>
