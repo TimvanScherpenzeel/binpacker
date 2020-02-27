@@ -237,7 +237,6 @@
     <div id="app"></div>
 
     <script>
-      const appElement = document.getElementById('app');
       const BINPACKER_HEADER_MAGIC = 'BINP';
       const BINPACKER_HEADER_LENGTH = 12;
       const BINPACKER_CHUNK_TYPE_JSON = 0x4e4f534a;
@@ -270,6 +269,8 @@
 
         return str;
       };
+
+      const appElement = document.getElementById('app');
 
       fileLoader('example.binpack', 'arraybuffer')
         .then(data => {
@@ -324,8 +325,6 @@
           const jsonChunk = JSON.parse(content);
           const binaryChunk = body;
 
-          console.log(jsonChunk);
-
           Promise.all(
             jsonChunk.map(
               entry =>
@@ -354,10 +353,6 @@
                             reject();
                           });
                       } else {
-                        image.onload = () => {
-                          URL.revokeObjectURL(imageUrl);
-                        };
-
                         image.src = imageUrl;
 
                         appElement.appendChild(image);
