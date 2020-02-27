@@ -7,6 +7,10 @@ You can use `Binpacker` as an efficient replacement for spritesheets.
 
 Inspired by [GLB File Format Specification](https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#glb-file-format-specification), [MM.Loader](https://github.com/MM56/MM.Loader), [MM.Packer](https://github.com/MM56/mm-packer), [Magipack.js](https://github.com/keitakun/Magipack.js) and [this Twitter thread](https://twitter.com/tvscherpenzeel/status/1015124298812489728).
 
+## Live demo
+
+[Live demo](https://timvanscherpenzeel.github.io/binpacker).
+
 ## Installation
 
 Make sure you have [Node.js](http://nodejs.org/) installed.
