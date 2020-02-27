@@ -13,6 +13,7 @@ node_modules
 # Directories
 dist
 input
+output
 
 # Logging
 *.log
